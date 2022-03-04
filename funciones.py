@@ -76,3 +76,65 @@ def mostrar_todos_los_actores(db):
                 print ("  -->",registro[1],registro[2],"-- Fecha nac:",registro[3],"-- Código:",registro[0])
     except:
         print ("Error en la consulta.")
+
+
+def mostrar_peliculas_secundarios(db):
+    sql= "select titulo,nombre,apellido from pelicula p,actor a,pelicula_actor where p.codigo=codigo_pelicula and a.codigo=codigo_actor and tipo_personaje='Secundario' order by titulo desc"
+    cursor=db.cursor()
+    try:
+        cursor.execute(sql)
+        if cursor.rowcount==0:
+            print ("No hay datos.")
+        else:
+            registros=cursor.fetchall()
+            print ("\nActores secundarios: ")
+            for registro in registros:
+                print ("  -->",registro[0],"-- Actor:",registro[1],registro[2])
+    except:
+        print ("Error en la consulta.")
+
+
+def borrar_actor_secundario(db,pelicula):
+    sql= "delete from pelicula_actor where tipo_personaje='Secundario' and codigo_pelicula = (select codigo from pelicula where titulo='%s')" % pelicula
+    cursor=db.cursor()
+    try:
+        cursor.execute(sql)
+        db.commit()
+        if cursor.rowcount==0:
+            print ("No existe la película o no hay actores secundarios.")
+        else:
+            print ("Actores borrados correctamente.")
+    except:
+        print ("Error al borrar.")
+        db.rollback()
+
+
+def actualizar_puntuacion_pelicula(db,pelicula,puntuacion):
+    sql= "update pelicula set puntuacion=%d where titulo='%s'" % (puntuacion,pelicula)
+    cursor=db.cursor()
+    try:
+        cursor.execute(sql)
+        if cursor.rowcount==0:
+            print ("No existe la película.")
+        else:
+            print ("\nPuntuación actualizada correctamente.")
+    except:
+        print ("Error en la consulta.")
+
+
+def mostrar_puntuaciones(db):
+    sql= "select titulo,puntuacion from pelicula"
+    cursor=db.cursor()
+    try:
+        cursor.execute(sql)
+        if cursor.rowcount==0:
+            print ("No hay datos.")
+        else:
+            registros=cursor.fetchall()
+            print ("\nPuntuaciones: ")
+            for registro in registros:
+                print ("  -->",registro[0],"-- Puntuación:",registro[1])
+    except:
+        print ("Error en la consulta.")
+
+
