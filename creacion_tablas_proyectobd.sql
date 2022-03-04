@@ -1,3 +1,11 @@
+create database proyecto_bd;
+create user 'usuario'@'%' identified by '1234';
+grant all privileges on proyecto_bd.* to 'usuario'@'%';
+flush privileges;
+exit
+mysql -u usuario -p
+use proyecto_bd
+
 create table actor
 (
 codigo varchar (5),
