@@ -1,6 +1,6 @@
 create database proyecto_bd;
-create user 'usuario'@'%' identified by '1234';
-grant all privileges on proyecto_bd.* to 'usuario'@'%';
+create user 'usuario'@'localhost' identified by '1234';
+grant all privileges on proyecto_bd.* to 'usuario'@'localhost';
 flush privileges;
 exit
 mysql -u usuario -p
