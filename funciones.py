@@ -48,3 +48,31 @@ def mostrar_actor(db,title):
                 print ("  -->",registro[1],registro[2],"-- Fecha nac:",registro[3],"-- Código:",registro[0])
     except:
         print ("Error en la consulta.")
+
+
+def insertar_actor(db,actor):
+    cursor= db.cursor()
+    sql= "insert into actor values ('%s','%s','%s','%s')" % (actor[0],actor[1],actor[2],actor[3])
+    try:
+        cursor.execute(sql)
+        db.commit()
+        print ("\nDatos insertados correctamente.")
+    except:
+        print ("\nERROR. Comprueba que has insertado los datos correctamente.")
+        db.rollback()
+
+
+def mostrar_todos_los_actores(db):
+    sql= "select * from actor"
+    cursor=db.cursor()
+    try:
+        cursor.execute(sql)
+        if cursor.rowcount==0:
+            print ("No hay actores en la base de datos.")
+        else:
+            registros=cursor.fetchall()
+            print ("\nActores en la base de datos: ")
+            for registro in registros:
+                print ("  -->",registro[1],registro[2],"-- Fecha nac:",registro[3],"-- Código:",registro[0])
+    except:
+        print ("Error en la consulta.")
